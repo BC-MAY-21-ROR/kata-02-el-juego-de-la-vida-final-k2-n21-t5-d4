@@ -1,18 +1,19 @@
+#Class Grid allows to create the algorithm
 class Grid
+  #Initialize the grid.
     def initialize
         @fil = 5
         @col = 5    
         @grid = initLife()
         @grid2 = initGrid()
+        #@grid2 accomodates the initializer of the Grid 
       end
 
     def colocacion()
-      # definicion de variantes locales dentro de la clase
       puts "Cuantas filas deseas?:"
       @fil = gets.to_i
       puts "Cuantas columnas deseas?:"
       @col = gets.to_i
-  
       @grid = initLife()
       @grid2 = initGrid()
     end
@@ -31,23 +32,27 @@ class Grid
     end
   
     def generacion()
+        
+      grid2 = @grid2
+      grid = @grid
+
       (1..@fil - 2).each do |i|
         (1..@col - 2).each do |j|
           celulas_vivas = 0
           (-1..1).each do |a|
             (-1..1).each do |b|
-              celulas_vivas += @grid[i - a][j - b]
+              celulas_vivas += grid[i - a][j - b]
             end
           end
-          celulas_vivas -= @grid[i][j]
-          @grid2[i][j] = if @grid[i][j] == 1 && celulas_vivas < 2
+          celulas_vivas -= grid[i][j]
+          grid2[i][j] = if grid[i][j] == 1 && celulas_vivas < 2
                           0
-                        elsif @grid[i][j] == 1 && celulas_vivas > 3
+                        elsif grid[i][j] == 1 && celulas_vivas > 3
                           0
-                        elsif @grid[i][j].zero? && celulas_vivas == 3
+                        elsif grid[i][j].zero? && celulas_vivas == 3
                           1
                         else
-                          @grid[i][j]
+                          grid[i][j]
                         end
         end
       end
@@ -92,7 +97,7 @@ class Grid
   print 'Generación inicial'
   print "\n"
   nueva_generacion = Grid.new
-  
+   
   nueva_generacion.colocacion() # se setean variantes (numero de filas y numero de columnas)
   nueva_generacion.dibujar() # se dibuja la primer generacion
   nueva_generacion.generacion() # se hace la verificacion de las celulas vivas y muertas
